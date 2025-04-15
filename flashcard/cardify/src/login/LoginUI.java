@@ -52,7 +52,7 @@ public class LoginUI extends JFrame {
 
         Dimension size = new Dimension(800, 400);
 
-        JPanel panel1 = new JPanel();
+        JPanel panel1 = new JPanel() ;
         panel1.setSize(size);
         panel1.setPreferredSize(size);
         panel1.setBackground(UIUtils.COLOR_BACKGROUND);
@@ -61,10 +61,12 @@ public class LoginUI extends JFrame {
         MouseAdapter ma = new MouseAdapter() {
             int lastX, lastY;
 
+
             @Override
             public void mousePressed(MouseEvent e) {
                 lastX = e.getXOnScreen();
                 lastY = e.getYOnScreen();
+                
             }
 
             @Override
