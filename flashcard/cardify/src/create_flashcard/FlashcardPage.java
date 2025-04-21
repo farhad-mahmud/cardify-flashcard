@@ -191,15 +191,15 @@ public class FlashcardPage extends JFrame {
 
 
            // this is flashcard view box ;
-        JPanel cardPanel = new JPanel() {
+           JPanel cardPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = UIUtils.get2dGraphics(g);
-                g2.setColor(getBackground());
+                g2.setColor(new Color(45, 60, 75)); // 🔷 Adjust background color here
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), UIUtils.ROUNDNESS, UIUtils.ROUNDNESS);
                 super.paintComponent(g2);
             }
-        
+    
             @Override
             protected void paintBorder(Graphics g) {
                 Graphics2D g2 = UIUtils.get2dGraphics(g);
@@ -207,15 +207,19 @@ public class FlashcardPage extends JFrame {
                 g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, UIUtils.ROUNDNESS, UIUtils.ROUNDNESS);
             }
         };
-        
-
+    
+        cardPanel.setPreferredSize(new Dimension(250, 100)); // 🧱 Bigger box
+        cardPanel.setLayout(new BorderLayout());
+        cardPanel.setOpaque(false); // Let paintComponent control the background
+        cardPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    
         JLabel content = new JLabel("<html><div style='text-align:center;'>" + card.getQuestion() + "</div></html>", SwingConstants.CENTER);
         content.setFont(UIUtils.FONT_GENERAL_UI);
         content.setForeground(Color.WHITE);
         cardPanel.add(content, BorderLayout.CENTER);
-
+    
         final boolean[] showingQuestion = {true};
-
+    
         cardPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -227,7 +231,7 @@ public class FlashcardPage extends JFrame {
                 }
             }
         });
-
+    
         return cardPanel;
     }
 
