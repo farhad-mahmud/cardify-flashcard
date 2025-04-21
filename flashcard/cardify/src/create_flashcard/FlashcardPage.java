@@ -154,7 +154,9 @@ public class FlashcardPage extends JFrame {
                 }
         
                 Flashcard card = new Flashcard(question, answer);
-                flashcardStore.get(subject).add(card);
+
+                FlashcardStorage.addCard(subject, card) ;
+
                 toaster.success("Flashcard added!");
         
                 questionField.setText("");
@@ -179,7 +181,7 @@ public class FlashcardPage extends JFrame {
 
     private void renderCards() {
         displayPanel.removeAll();
-        for (Flashcard card : flashcardStore.get(subject)) {
+        for (Flashcard card : FlashcardStorage.getCards(subject)) {
             JPanel cardPanel = createFlashcardUI(card);
             displayPanel.add(cardPanel);
         }
