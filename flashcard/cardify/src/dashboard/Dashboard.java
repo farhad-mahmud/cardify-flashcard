@@ -1,5 +1,6 @@
 package dashboard;
 
+import component.HyperlinkText;
 import component.Toaster;
 import Utils.*;
 
@@ -51,48 +52,44 @@ public class Dashboard extends JFrame {
     private void addSubjectButtons(JPanel panel) {
         String[] subjects = {"Machine Learning", "C++", "English", "OOP"};
         Color[] colors = {
-
-                new Color(52, 89, 95),    
-                new Color(166, 72, 49),   
-                new Color(39, 76, 66),    
-                new Color(88, 62, 117)   
-
+            new Color(52, 89, 95),
+            new Color(166, 72, 49),
+            new Color(39, 76, 66),
+            new Color(88, 62, 117)
         };
     
         int x1 = 180, y1 = 100, w = 180, h = 80;
         int gapX = 240, gapY = 130;
     
         for (int i = 0; i < subjects.length; i++) {
-            final int index = i; 
-    
+            final int index = i;
             int row = index / 2;
             int col = index % 2;
     
-
             JLabel btn = new JLabel(subjects[index]) {
                 @Override
                 protected void paintComponent(Graphics g) {
                     Graphics2D g2 = UIUtils.get2dGraphics(g);
                     g2.setColor(getBackground());
                     g2.fillRoundRect(0, 0, getWidth(), getHeight(), UIUtils.ROUNDNESS * 2, UIUtils.ROUNDNESS * 2);
-            
+    
                     FontMetrics metrics = g2.getFontMetrics(UIUtils.FONT_GENERAL_UI);
                     int x2 = (getWidth() - metrics.stringWidth(subjects[index])) / 2;
                     int y2 = ((getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
-            
+    
                     g2.setColor(getForeground());
                     g2.setFont(UIUtils.FONT_GENERAL_UI);
                     g2.drawString(subjects[index], x2, y2);
                 }
             };
-            
-
+    
             btn.setFont(UIUtils.FONT_GENERAL_UI);
             btn.setForeground(Color.WHITE);
             btn.setOpaque(true);
             btn.setBackground(colors[index]);
             btn.setBounds(x1 + col * gapX, y1 + row * gapY, w, h);
             btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btn.setBorder(BorderFactory.createLineBorder(UIUtils.COLOR_BACKGROUND, 1, true));
     
             btn.addMouseListener(new MouseAdapter() {
                 @Override
@@ -107,16 +104,28 @@ public class Dashboard extends JFrame {
     
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    toaster.info(" Opening " + subjects[index] + " Flashcards...");
-
-                    new create_flashcard.FlashcardPage(subjects[index]) ;
+                    toaster.info("Opening " + subjects[index] + " Flashcards...");
+                    new create_flashcard.FlashcardPage(subjects[index]);
+                    dispose();
                 }
             });
     
-            btn.setBorder(BorderFactory.createLineBorder(UIUtils.COLOR_BACKGROUND, 1, true));
-            panel.add(btn);
+            panel.add(btn); 
+    
+        
+            HyperlinkText quizLink = new HyperlinkText("Start Quiz",
+                    x1 + col * gapX + 50,
+                    y1 + row * gapY + h + 5,
+                    () -> {
+                        toaster.info("Launching " + subjects[index] + " Quiz...");
+                        new create_quiz.QuizPage(subjects[index]);
+                        dispose();
+                    });
+    
+            panel.add(quizLink);
         }
     }
+    
     
 
     private void addPlusButton(JPanel panel) {
