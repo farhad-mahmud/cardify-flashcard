@@ -1,6 +1,6 @@
 package create_flashcard;
 
-import create_flashcard.Flashcard;
+
 
 public class Flashcard {
     private String question;

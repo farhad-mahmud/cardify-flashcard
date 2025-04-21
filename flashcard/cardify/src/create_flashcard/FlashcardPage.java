@@ -57,14 +57,14 @@ public class FlashcardPage extends JFrame {
         };
         
         backBtn.setFont(UIUtils.FONT_GENERAL_UI);
-        backBtn.setBounds(20, 440, 80, 30); // Bottom-left corner
+        backBtn.setBounds(20, 440, 80, 30); 
         backBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         backBtn.setOpaque(false);
         
         backBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                new dashboard.Dashboard(); // Replace with your actual class if named differently
+                new dashboard.Dashboard(); 
                 dispose();
             }
         });
@@ -230,7 +230,7 @@ public class FlashcardPage extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = UIUtils.get2dGraphics(g);
-                g2.setColor(new Color(45, 60, 75)); // 🔷 Adjust background color here
+                g2.setColor(new Color(45, 60, 75)); 
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), UIUtils.ROUNDNESS, UIUtils.ROUNDNESS);
                 super.paintComponent(g2);
             }
@@ -243,9 +243,9 @@ public class FlashcardPage extends JFrame {
             }
         };
     
-        cardPanel.setPreferredSize(new Dimension(250, 100)); // 🧱 Bigger box
+        cardPanel.setPreferredSize(new Dimension(250, 100));
         cardPanel.setLayout(new BorderLayout());
-        cardPanel.setOpaque(false); // Let paintComponent control the background
+        cardPanel.setOpaque(false); 
         cardPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     
         JLabel content = new JLabel("<html><div style='text-align:center;'>" + card.getQuestion() + "</div></html>", SwingConstants.CENTER);
