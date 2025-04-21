@@ -188,12 +188,26 @@ public class FlashcardPage extends JFrame {
     }
 
     private JPanel createFlashcardUI(Flashcard card) {
-        JPanel cardPanel = new JPanel();
-        cardPanel.setPreferredSize(new Dimension(200, 100));
-        cardPanel.setBackground(new Color(66, 133, 244));
-        cardPanel.setLayout(new BorderLayout());
-        cardPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        cardPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+
+           // this is flashcard view box ;
+        JPanel cardPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = UIUtils.get2dGraphics(g);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), UIUtils.ROUNDNESS, UIUtils.ROUNDNESS);
+                super.paintComponent(g2);
+            }
+        
+            @Override
+            protected void paintBorder(Graphics g) {
+                Graphics2D g2 = UIUtils.get2dGraphics(g);
+                g2.setColor(UIUtils.COLOR_OUTLINE);
+                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, UIUtils.ROUNDNESS, UIUtils.ROUNDNESS);
+            }
+        };
+        
 
         JLabel content = new JLabel("<html><div style='text-align:center;'>" + card.getQuestion() + "</div></html>", SwingConstants.CENTER);
         content.setFont(UIUtils.FONT_GENERAL_UI);
