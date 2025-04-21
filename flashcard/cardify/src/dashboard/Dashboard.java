@@ -118,7 +118,11 @@ public class Dashboard extends JFrame {
                     y1 + row * gapY + h + 5,
                     () -> {
                         toaster.info("Launching " + subjects[index] + " Quiz...");
+                        
+                        System.out.println("Starting quiz for " + subjects[index]);
+
                         new create_quiz.QuizPage(subjects[index]);
+
                         dispose();
                     });
     

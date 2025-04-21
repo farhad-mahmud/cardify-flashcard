@@ -40,6 +40,8 @@ public class QuizPage extends JFrame {
         add(panel);
 
         toaster = new Toaster(panel);
+     
+        setVisible(true);
 
         if (questions.size() < 4) {
             toaster.warn("Not enough flashcards for quiz.");
@@ -48,7 +50,7 @@ public class QuizPage extends JFrame {
 
         addCloseButton();
         loadNextQuestion();
-        setVisible(true);
+        
     }
 
     private void loadNextQuestion() {

@@ -39,6 +39,39 @@ public class FlashcardPage extends JFrame {
         panel.setBounds(0, 0, 800, 500);
         add(panel);
 
+        // marked 
+
+        JLabel backBtn = new JLabel("< Back", SwingConstants.CENTER) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = UIUtils.get2dGraphics(g);
+                g2.setColor(new Color(70, 130, 180)); // Steel blue
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), UIUtils.ROUNDNESS, UIUtils.ROUNDNESS);
+                FontMetrics metrics = g2.getFontMetrics(getFont());
+                int x = (getWidth() - metrics.stringWidth(getText())) / 2;
+                int y = ((getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
+                g2.setColor(Color.WHITE);
+                g2.setFont(getFont());
+                g2.drawString(getText(), x, y);
+            }
+        };
+        
+        backBtn.setFont(UIUtils.FONT_GENERAL_UI);
+        backBtn.setBounds(20, 440, 80, 30); // Bottom-left corner
+        backBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        backBtn.setOpaque(false);
+        
+        backBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                new dashboard.Dashboard(); // Replace with your actual class if named differently
+                dispose();
+            }
+        });
+        
+        panel.add(backBtn);
+        
+
         toaster = new Toaster(panel);
 
         addTitle(panel);
