@@ -11,12 +11,15 @@ import java.awt.event.*;
 import java.util.Objects;
 import javax.swing.*;
 
+
 public class LoginUI extends JFrame {
 
     private final Toaster toaster;
 
     public static void main(String[] args) {
+
         new LoginUI();
+
     }
 
     private LoginUI() {
@@ -29,7 +32,7 @@ public class LoginUI extends JFrame {
         addUsernameTextField(mainJPanel);
 
         addPasswordTextField(mainJPanel);
-
+          
         addLoginButton(mainJPanel);
 
         addForgotPasswordButton(mainJPanel);
@@ -90,6 +93,7 @@ public class LoginUI extends JFrame {
         });
 
         return panel1;
+
     }
 
     private void addSeparator(JPanel panel1) {
@@ -109,6 +113,7 @@ public class LoginUI extends JFrame {
     }
 
     private void addUsernameTextField(JPanel panel1) {
+
         TextFieldUsername usernameField = new TextFieldUsername();
 
         usernameField.setBounds(423, 109, 250, 44);
@@ -252,10 +257,10 @@ public class LoginUI extends JFrame {
         if (mongoConnector.validateLogin(username, password)) {
             toaster.success("Login successful");
     
-            // Delay to show toaster before switching screen
+           
             Timer timer = new Timer(1200, e -> {
-                this.dispose();  // Close login window
-                new dashboard.Dashboard(); // Open dashboard
+                this.dispose(); 
+                new dashboard.Dashboard(); 
             });
             timer.setRepeats(false);
             timer.start();

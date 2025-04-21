@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 
 import static Utils.UIUtils.*;
 import static java.awt.Cursor.*;
-// hyperlink is for mouse hoavering effect ;
+
 public class HyperlinkText extends JLabel {
     public HyperlinkText(String hyperlinkText, int xPos, int yPos, Runnable hyperlinkAction) {
         super(hyperlinkText);

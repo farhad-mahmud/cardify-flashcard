@@ -51,11 +51,11 @@ public class ToasterBody extends JPanel {
         Graphics2D g2 = UIUtils.get2dGraphics(g);
         super.paintComponent(g2);
 
-        //Background
+      
         g2.setColor(c);
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), UIUtils.ROUNDNESS, UIUtils.ROUNDNESS);
 
-        // Font
+       
         g2.setFont(UIUtils.FONT_GENERAL_UI);
         g2.setColor(Color.white);
         g2.drawString(message, stringPosX, stringPosY);
@@ -75,7 +75,7 @@ public class ToasterBody extends JPanel {
 
     public void setyPos(int yPos) {
         this.yPos = yPos;
-//        setBounds((panelToToastOn.getWidth() - toastWidth) / 2, yPos, toastWidth, heightOfToast);
+
 
         new Thread(() -> {
             while (getBounds().y > yPos) {
