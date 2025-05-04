@@ -12,8 +12,9 @@ public class HyperlinkText extends JLabel {
     public HyperlinkText(String hyperlinkText, int xPos, int yPos, Runnable hyperlinkAction) {
         super(hyperlinkText);
         setForeground(COLOR_OUTLINE);
-        setFont(FONT_FORGOT_PASSWORD);
-        setCursor(getPredefinedCursor(HAND_CURSOR));
+        setFont(FONT_FORGOT_PASSWORD); 
+        setCursor(getPredefinedCursor(HAND_CURSOR));   // hover of cursor
+        
 
         addMouseListener(new MouseAdapter() {
             @Override
