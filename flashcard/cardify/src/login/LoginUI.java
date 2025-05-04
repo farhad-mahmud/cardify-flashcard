@@ -23,6 +23,7 @@ public class LoginUI extends JFrame {
     }
 
     private LoginUI() {
+        
         JPanel mainJPanel = getMainJPanel();
 
         addLogo(mainJPanel);
@@ -233,12 +234,13 @@ public class LoginUI extends JFrame {
         }));
     }
 
-    private void loginEventHandler() {
+    private void loginEventHandler() {   // main login event 
         
         Component[] components = this.getContentPane().getComponents();
         JPanel panel = (JPanel) components[0];
     
         TextFieldUsername usernameField = null;
+
         TextFieldPassword passwordField = null;
     
         for (Component c : panel.getComponents()) {
@@ -251,7 +253,8 @@ public class LoginUI extends JFrame {
             return;
         }
     
-        String username = usernameField.getText();
+        String username = usernameField.getText();        // grabs the text from the input fields ;
+
         String password = new String(passwordField.getPassword());
     
         if (mongoConnector.validateLogin(username, password)) {
@@ -262,8 +265,10 @@ public class LoginUI extends JFrame {
                 this.dispose(); 
                 new dashboard.Dashboard(); 
             });
+
             timer.setRepeats(false);
             timer.start();
+
     
         } else {
             toaster.error("Invalid username or password");

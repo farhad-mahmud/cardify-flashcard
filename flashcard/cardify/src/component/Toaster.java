@@ -45,7 +45,7 @@ public class Toaster {
         }
     }
 
-    private void toast(String message, Color bgColor) {
+    private void toast(String message, Color bgColor) {    // creates a toast body - the actual toast popup
         ToasterBody toasterBody;
 
         if (toasterBodies.isEmpty()) {
@@ -59,7 +59,7 @@ public class Toaster {
         toasterBodies.add(toasterBody);
 
         new Thread(() -> {
-            toasterBody.addMouseListener(new MouseAdapter() {
+            toasterBody.addMouseListener(new MouseAdapter() {  // mouse click removes toaster notification ;
                 @Override
                 public void mousePressed(MouseEvent e) {
                     removeToast(toasterBody);
@@ -71,8 +71,8 @@ public class Toaster {
 
             try {
                 Thread.sleep(6000);
-                removeToast(toasterBody);
-            } catch (InterruptedException e) {
+                removeToast(toasterBody);          
+            } catch (InterruptedException e) {         // we use exception handling here 
                 e.printStackTrace();
             }
         }).start();

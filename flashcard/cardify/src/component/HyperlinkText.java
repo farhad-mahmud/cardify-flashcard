@@ -13,18 +13,18 @@ public class HyperlinkText extends JLabel {
         super(hyperlinkText);
         setForeground(COLOR_OUTLINE);
         setFont(FONT_FORGOT_PASSWORD); 
-        setCursor(getPredefinedCursor(HAND_CURSOR));   // hover of cursor
+        setCursor(getPredefinedCursor(HAND_CURSOR));   
         
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                hyperlinkAction.run();
+                hyperlinkAction.run();                     // hovering effect 
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                setForeground(COLOR_OUTLINE.darker());
+                setForeground(COLOR_OUTLINE.darker());   // colour gets darker when mouse cursor gets on top 
             }
 
             @Override

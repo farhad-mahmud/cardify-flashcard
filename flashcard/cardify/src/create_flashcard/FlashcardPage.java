@@ -103,9 +103,11 @@ public class FlashcardPage extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = UIUtils.get2dGraphics(g);
+
                 g2.setColor(getBackground());
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), UIUtils.ROUNDNESS, UIUtils.ROUNDNESS);
                 super.paintComponent(g2);
+                
             }
         
             @Override
@@ -218,8 +220,10 @@ public class FlashcardPage extends JFrame {
             JPanel cardPanel = createFlashcardUI(card);
             displayPanel.add(cardPanel);
         }
+
         displayPanel.revalidate();
         displayPanel.repaint();
+
     }
 
     private JPanel createFlashcardUI(Flashcard card) {
