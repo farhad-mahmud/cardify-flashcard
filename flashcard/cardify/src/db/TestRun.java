@@ -17,9 +17,6 @@ public class TestRun {
             System.out.println("Login success: " + user.getString("username"));
             ObjectId userId = user.getObjectId("_id");
 
-            // FlashcardManager.addFlashcard(userId, "What is Java?", "A programming
-            // language.");
-
             List<Document> cards = FlashcardManager.getFlashcards(userId);
             for (Document card : cards) {
                 System.out.println("Q: " + card.getString("question"));

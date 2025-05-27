@@ -252,9 +252,9 @@ public class LoginUI extends JFrame {
                 () -> toaster.error("Forgot password event")));
     }
 
-    private void addRegisterButton(JPanel panel) {
-        panel.add(new HyperlinkText(UIUtils.BUTTON_TEXT_REGISTER, 631, 300,
-                () -> toaster.success("Register event")));
+    private void addRegisterButton(JPanel panel1) {
+        panel1.add(new HyperlinkText(UIUtils.BUTTON_TEXT_REGISTER, 631, 300,
+                () -> new RegisterUI()));
     }
 
     private void loginEventHandler() {
@@ -289,7 +289,7 @@ public class LoginUI extends JFrame {
                 if (opacity <= 0) {
                     ((Timer) e.getSource()).stop();
                     dispose();
-                    new dashboard.Dashboard(); // Make sure this exists
+                    new dashboard.Dashboard();
                 } else {
                     setOpacity(opacity);
                 }
@@ -300,4 +300,5 @@ public class LoginUI extends JFrame {
             toaster.error("Invalid username or password");
         }
     }
+
 }

@@ -3,6 +3,7 @@ package dashboard;
 import component.Toaster;
 import Utils.UIUtils;
 import create_flashcard.FlashcardStorage;
+import org.bson.types.ObjectId;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,6 +28,7 @@ public class Dashboard extends JFrame {
         addHeader(mainPanel);
         addSubjectCards(mainPanel);
         addActionButtons(mainPanel);
+        addAllUsersButton(mainPanel);
 
         setVisible(true);
     }
@@ -71,8 +73,7 @@ public class Dashboard extends JFrame {
                 new Subject("English", new Color(39, 76, 66), "english_icon.png"),
                 new Subject("OOP", new Color(88, 62, 117), "oop_icon.png"),
                 new Subject("Algorithms", new Color(120, 80, 60), "algo_icon.png"),
-                new Subject("Database", new Color(60, 80, 120), "db_icon.png")
-        );
+                new Subject("Database", new Color(60, 80, 120), "db_icon.png"));
 
         int cardWidth = 220;
         int cardHeight = 150;
@@ -91,8 +92,7 @@ public class Dashboard extends JFrame {
                     startX + col * (cardWidth + horizontalGap),
                     startY + row * (cardHeight + verticalGap),
                     cardWidth,
-                    cardHeight
-            );
+                    cardHeight);
             panel.add(card);
 
             addQuizButton(panel, subject,
@@ -142,7 +142,7 @@ public class Dashboard extends JFrame {
     }
 
     private void addQuizButton(JPanel parentPanel, Subject subject, int x, int y) {
-        boolean[] hovered = new boolean[]{false};
+        boolean[] hovered = new boolean[] { false };
 
         JLabel quizButton = new JLabel("QUIZ", SwingConstants.CENTER) {
             @Override
@@ -193,7 +193,6 @@ public class Dashboard extends JFrame {
         parentPanel.add(quizButton);
     }
 
-
     private void addActionButtons(JPanel panel) {
         JButton addFlashcardBtn = createRoundButton("+", new Color(122, 201, 160),
                 WINDOW_WIDTH / 2 - 30, WINDOW_HEIGHT - 100, 60, 60);
@@ -215,8 +214,7 @@ public class Dashboard extends JFrame {
                     JOptionPane.QUESTION_MESSAGE,
                     null,
                     subjectArray,
-                    subjectArray[0]
-            );
+                    subjectArray[0]);
 
             if (selectedSubject != null) {
                 new create_flashcard.FlashcardPage(selectedSubject);
@@ -231,9 +229,60 @@ public class Dashboard extends JFrame {
         settingsBtn.setToolTipText("Settings");
         settingsBtn.addActionListener(e -> {
             toaster.info("Opening settings...");
-            // TODO: Implement settings dialog
         });
         panel.add(settingsBtn);
+    }
+
+    private void addAllUsersButton(JPanel panel) {
+        final Color[] userButtonColors = { UIUtils.COLOR_INTERACTIVE, Color.WHITE };
+
+        JLabel allUsersButton = new JLabel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = UIUtils.get2dGraphics(g);
+                super.paintComponent(g2);
+
+                Insets insets = getInsets();
+                int w = getWidth() - insets.left - insets.right;
+                int h = getHeight() - insets.top - insets.bottom;
+                g2.setColor(userButtonColors[0]);
+                g2.fillRoundRect(insets.left, insets.top, w, h, UIUtils.ROUNDNESS, UIUtils.ROUNDNESS);
+
+                FontMetrics metrics = g2.getFontMetrics(UIUtils.FONT_GENERAL_UI);
+                int x = (getWidth() - metrics.stringWidth("Show All Users")) / 2;
+                int y = ((getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
+                g2.setFont(UIUtils.FONT_GENERAL_UI);
+                g2.setColor(userButtonColors[1]);
+                g2.drawString("Show All Users", x, y);
+            }
+        };
+
+        allUsersButton.setBounds(WINDOW_WIDTH - 180, 30, 140, 44);
+        allUsersButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        allUsersButton.setBackground(UIUtils.COLOR_BACKGROUND);
+
+        allUsersButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                new AllUsersViewer();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                userButtonColors[0] = UIUtils.COLOR_INTERACTIVE_DARKER;
+                userButtonColors[1] = UIUtils.OFFWHITE;
+                allUsersButton.repaint();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                userButtonColors[0] = UIUtils.COLOR_INTERACTIVE;
+                userButtonColors[1] = Color.WHITE;
+                allUsersButton.repaint();
+            }
+        });
+
+        panel.add(allUsersButton);
     }
 
     private JButton createRoundButton(String text, Color bgColor, int x, int y, int width, int height) {
