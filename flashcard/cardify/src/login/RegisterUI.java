@@ -15,7 +15,7 @@ public class RegisterUI extends JFrame {
     public RegisterUI() {
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 0));
-        setSize(400, 350);
+        setSize(400, 400);
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -29,7 +29,7 @@ public class RegisterUI extends JFrame {
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
             }
         };
-        panel.setBounds(0, 0, 400, 350);
+        panel.setBounds(0, 0, 400, 400);
         panel.setLayout(null);
         panel.setOpaque(false);
         add(panel);
@@ -42,14 +42,65 @@ public class RegisterUI extends JFrame {
 
         TextFieldUsername usernameField = new TextFieldUsername();
         usernameField.setBounds(70, 70, 260, 40);
+        usernameField.setText("Username");
+        usernameField.setForeground(UIUtils.COLOR_OUTLINE);
+        usernameField.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                if (usernameField.getText().equals("Username")) {
+                    usernameField.setText("");
+                    usernameField.setForeground(Color.WHITE);
+                }
+            }
+
+            public void focusLost(FocusEvent e) {
+                if (usernameField.getText().isEmpty()) {
+                    usernameField.setText("Username");
+                    usernameField.setForeground(UIUtils.COLOR_OUTLINE);
+                }
+            }
+        });
         panel.add(usernameField);
 
         TextFieldUsername emailField = new TextFieldUsername();
         emailField.setBounds(70, 120, 260, 40);
         emailField.setText("Email");
         emailField.setForeground(UIUtils.COLOR_OUTLINE);
+        emailField.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                if (emailField.getText().equals("Email")) {
+                    emailField.setText("");
+                    emailField.setForeground(Color.WHITE);
+                }
+            }
+
+            public void focusLost(FocusEvent e) {
+                if (emailField.getText().isEmpty()) {
+                    emailField.setText("Email");
+                    emailField.setForeground(UIUtils.COLOR_OUTLINE);
+                }
+            }
+        });
+        panel.add(emailField);
+
         TextFieldPassword passwordField = new TextFieldPassword();
         passwordField.setBounds(70, 170, 260, 40);
+        passwordField.setText("Password");
+        passwordField.setForeground(UIUtils.COLOR_OUTLINE);
+        passwordField.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                if (String.valueOf(passwordField.getPassword()).equals("Password")) {
+                    passwordField.setText("");
+                    passwordField.setForeground(Color.WHITE);
+                }
+            }
+
+            public void focusLost(FocusEvent e) {
+                if (String.valueOf(passwordField.getPassword()).isEmpty()) {
+                    passwordField.setText("Password");
+                    passwordField.setForeground(UIUtils.COLOR_OUTLINE);
+                }
+            }
+        });
         panel.add(passwordField);
 
         final Color[] registerButtonColors = { UIUtils.COLOR_INTERACTIVE, Color.WHITE };
@@ -75,7 +126,7 @@ public class RegisterUI extends JFrame {
             }
         };
 
-        registerButton.setBounds(130, 230, 140, 44);
+        registerButton.setBounds(130, 240, 140, 44);
         registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         registerButton.setBackground(UIUtils.COLOR_BACKGROUND);
 
@@ -86,7 +137,8 @@ public class RegisterUI extends JFrame {
                 String email = emailField.getText().trim();
                 String password = new String(passwordField.getPassword()).trim();
 
-                if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                if (username.isEmpty() || email.isEmpty() || password.isEmpty() ||
+                        username.equals("Username") || email.equals("Email") || password.equals("Password")) {
                     toaster.error("All fields required!");
                     return;
                 }
