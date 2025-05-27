@@ -3,11 +3,11 @@ package login;
 import Utils.*;
 import component.HyperlinkText;
 import component.Toaster;
-import db.mongoConnector;
+import db.UserManager;
+import db.FlashcardManager;
+import db.TestMongo;
 
-import com.mongodb.client.MongoClients;
 import org.bson.Document;
-
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +23,6 @@ public class LoginUI extends JFrame {
     private static final Logger LOGGER = Logger.getLogger(LoginUI.class.getName());
 
     public static void main(String[] args) {
-        
         SwingUtilities.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -71,7 +70,7 @@ public class LoginUI extends JFrame {
                 g2.setColor(UIUtils.COLOR_BACKGROUND);
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
                 g2.setColor(new Color(0, 0, 0, 50));
-                g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 20, 20);
+                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20);
             }
         };
     }
@@ -163,67 +162,31 @@ public class LoginUI extends JFrame {
         setLocation(screenSize.width / 2 - getWidth() / 2, screenSize.height / 2 - getHeight() / 2);
     }
 
-    private void addSeparator(JPanel panel1) {
-        JSeparator separator1 = new JSeparator();
-        separator1.setOrientation(SwingConstants.VERTICAL);
-        separator1.setForeground(UIUtils.COLOR_OUTLINE);
-        panel1.add(separator1);
-        separator1.setBounds(310, 80, 1, 240);
+    private void addSeparator(JPanel panel) {
+        JSeparator separator = new JSeparator(SwingConstants.VERTICAL);
+        separator.setForeground(UIUtils.COLOR_OUTLINE);
+        separator.setBounds(310, 80, 1, 240);
+        panel.add(separator);
     }
 
-    private void addLogo(JPanel panel1) {
-        JLabel label1 = new JLabel();
-        label1.setFocusable(false);
-        label1.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("images/logoo.png"))));
-        panel1.add(label1);
-        label1.setBounds(55, 146, 200, 110);
+    private void addLogo(JPanel panel) {
+        JLabel label = new JLabel();
+        label.setFocusable(false);
+        label.setIcon(
+                new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("images/logoo.png"))));
+        label.setBounds(55, 146, 200, 110);
+        panel.add(label);
     }
 
-    private void addUsernameTextField(JPanel panel1) {
+    private void addUsernameTextField(JPanel panel) {
         TextFieldUsername usernameField = new TextFieldUsername();
-
         usernameField.setBounds(423, 109, 250, 44);
-        usernameField.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent unused) {
-                if (usernameField.getText().equals(UIUtils.PLACEHOLDER_TEXT_USERNAME)) {
-                    usernameField.setText("");
-                }
-                usernameField.setForeground(Color.white);
-                usernameField.setBorderColor(UIUtils.COLOR_INTERACTIVE);
-            }
-
-            @Override
-            public void focusLost(FocusEvent unused) {
-                if (usernameField.getText().isEmpty()) {
-                    usernameField.setText(UIUtils.PLACEHOLDER_TEXT_USERNAME);
-                }
-                usernameField.setForeground(UIUtils.COLOR_OUTLINE);
-                usernameField.setBorderColor(UIUtils.COLOR_OUTLINE);
-            }
-        });
-
-        panel1.add(usernameField);
+        panel.add(usernameField);
     }
 
-    private void addPasswordTextField(JPanel panel1) {
+    private void addPasswordTextField(JPanel panel) {
         TextFieldPassword passwordField = new TextFieldPassword();
-
         passwordField.setBounds(423, 168, 250, 44);
-        passwordField.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent unused) {
-                passwordField.setForeground(Color.white);
-                passwordField.setBorderColor(UIUtils.COLOR_INTERACTIVE);
-            }
-
-            @Override
-            public void focusLost(FocusEvent unused) {
-                passwordField.setForeground(UIUtils.COLOR_OUTLINE);
-                passwordField.setBorderColor(UIUtils.COLOR_OUTLINE);
-            }
-        });
-
         passwordField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -231,12 +194,11 @@ public class LoginUI extends JFrame {
                     loginEventHandler();
             }
         });
-
-        panel1.add(passwordField);
+        panel.add(passwordField);
     }
 
-    private void addLoginButton(JPanel panel1) {
-        final Color[] loginButtonColors = {UIUtils.COLOR_INTERACTIVE, Color.white};
+    private void addLoginButton(JPanel panel) {
+        final Color[] loginButtonColors = { UIUtils.COLOR_INTERACTIVE, Color.white };
 
         JLabel loginButton = new JLabel() {
             @Override
@@ -280,19 +242,18 @@ public class LoginUI extends JFrame {
             }
         });
 
-        loginButton.setBackground(UIUtils.COLOR_BACKGROUND);
         loginButton.setBounds(423, 247, 250, 44);
         loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        panel1.add(loginButton);
+        panel.add(loginButton);
     }
 
-    private void addForgotPasswordButton(JPanel panel1) {
-        panel1.add(new HyperlinkText(UIUtils.BUTTON_TEXT_FORGOT_PASS, 423, 300,
+    private void addForgotPasswordButton(JPanel panel) {
+        panel.add(new HyperlinkText(UIUtils.BUTTON_TEXT_FORGOT_PASS, 423, 300,
                 () -> toaster.error("Forgot password event")));
     }
 
-    private void addRegisterButton(JPanel panel1) {
-        panel1.add(new HyperlinkText(UIUtils.BUTTON_TEXT_REGISTER, 631, 300,
+    private void addRegisterButton(JPanel panel) {
+        panel.add(new HyperlinkText(UIUtils.BUTTON_TEXT_REGISTER, 631, 300,
                 () -> toaster.success("Register event")));
     }
 
@@ -304,8 +265,10 @@ public class LoginUI extends JFrame {
         TextFieldPassword passwordField = null;
 
         for (Component c : panel.getComponents()) {
-            if (c instanceof TextFieldUsername) usernameField = (TextFieldUsername) c;
-            if (c instanceof TextFieldPassword) passwordField = (TextFieldPassword) c;
+            if (c instanceof TextFieldUsername)
+                usernameField = (TextFieldUsername) c;
+            if (c instanceof TextFieldPassword)
+                passwordField = (TextFieldPassword) c;
         }
 
         if (usernameField == null || passwordField == null) {
@@ -316,21 +279,23 @@ public class LoginUI extends JFrame {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
 
-        if (mongoConnector.validateLogin(username, password)) {
+        Document user = UserManager.loginUser(username, password);
+        if (user != null) {
             toaster.success("Login successful");
 
             Timer fadeTimer = new Timer(10, e -> {
                 float opacity = getOpacity();
                 opacity -= 0.05f;
                 if (opacity <= 0) {
-                    ((Timer)e.getSource()).stop();
+                    ((Timer) e.getSource()).stop();
                     dispose();
-                    new dashboard.Dashboard();
+                    new dashboard.Dashboard(); // Make sure this exists
                 } else {
                     setOpacity(opacity);
                 }
             });
             fadeTimer.start();
+
         } else {
             toaster.error("Invalid username or password");
         }

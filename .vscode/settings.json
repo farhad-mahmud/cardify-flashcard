@@ -1,0 +1,8 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "flashcard/cardify/lib/bson-4.11.0.jar",
+        "flashcard/cardify/lib/mongodb-driver-core-4.11.0.jar",
+        "flashcard/cardify/lib/mongodb-driver-sync-4.11.0.jar"
+    ]
+}
