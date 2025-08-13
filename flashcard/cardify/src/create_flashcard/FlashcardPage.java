@@ -9,11 +9,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-import java.util.List ;
-import java.util.ArrayList ;
-import java.util.HashMap ;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-import java.util.Map ;
+import java.util.Map;
 
 public class FlashcardPage extends JFrame {
     private final Map<String, List<Flashcard>> flashcardStore = new HashMap<>();
@@ -39,7 +39,7 @@ public class FlashcardPage extends JFrame {
         panel.setBounds(0, 0, 800, 500);
         add(panel);
 
-        // marked 
+        // marked
 
         JLabel backBtn = new JLabel("< Back", SwingConstants.CENTER) {
             @Override
@@ -55,22 +55,21 @@ public class FlashcardPage extends JFrame {
                 g2.drawString(getText(), x, y);
             }
         };
-        
+
         backBtn.setFont(UIUtils.FONT_GENERAL_UI);
-        backBtn.setBounds(20, 440, 80, 30); 
+        backBtn.setBounds(20, 440, 80, 30);
         backBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         backBtn.setOpaque(false);
-        
+
         backBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                new dashboard.Dashboard(); 
+                new dashboard.Dashboard();
                 dispose();
             }
         });
-        
+
         panel.add(backBtn);
-        
 
         toaster = new Toaster(panel);
 
@@ -97,8 +96,8 @@ public class FlashcardPage extends JFrame {
 
     private void addForm(JPanel panel) {
 
-          // question field 
-        
+        // question field
+
         JTextField questionField = new JTextField() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -107,9 +106,9 @@ public class FlashcardPage extends JFrame {
                 g2.setColor(getBackground());
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), UIUtils.ROUNDNESS, UIUtils.ROUNDNESS);
                 super.paintComponent(g2);
-                
+
             }
-        
+
             @Override
             protected void paintBorder(Graphics g) {
                 Graphics2D g2 = UIUtils.get2dGraphics(g);
@@ -117,7 +116,6 @@ public class FlashcardPage extends JFrame {
                 g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, UIUtils.ROUNDNESS, UIUtils.ROUNDNESS);
             }
         };
-
 
         questionField.setFont(UIUtils.FONT_GENERAL_UI);
         questionField.setForeground(Color.WHITE);
@@ -127,7 +125,7 @@ public class FlashcardPage extends JFrame {
         questionField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         panel.add(questionField);
 
-               // answer field 
+        // answer field
 
         JTextField answerField = new JTextField() {
             @Override
@@ -137,7 +135,7 @@ public class FlashcardPage extends JFrame {
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), UIUtils.ROUNDNESS, UIUtils.ROUNDNESS);
                 super.paintComponent(g2);
             }
-        
+
             @Override
             protected void paintBorder(Graphics g) {
                 Graphics2D g2 = UIUtils.get2dGraphics(g);
@@ -153,8 +151,7 @@ public class FlashcardPage extends JFrame {
         answerField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         panel.add(answerField);
 
-
-              // add flashcard button field 
+        // add flashcard button field
 
         JLabel addBtn = new JLabel("Add Flashcard", SwingConstants.CENTER) {
             @Override
@@ -173,11 +170,11 @@ public class FlashcardPage extends JFrame {
                 g2.drawString("Add Flashcard", x2, y2);
             }
         };
-        
+
         addBtn.setFont(UIUtils.FONT_GENERAL_UI);
         addBtn.setBounds(300, 180, 200, 44);
         addBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        
+
         addBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -187,31 +184,31 @@ public class FlashcardPage extends JFrame {
                     toaster.warn("Fill both fields");
                     return;
                 }
-        
+
                 Flashcard card = new Flashcard(question, answer);
 
-                FlashcardStorage.addCard(subject, card) ;
+                FlashcardStorage.addCard(subject, card);
 
                 toaster.success("Flashcard added!");
-        
+
                 questionField.setText("");
                 answerField.setText("");
                 renderCards();
             }
-        
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 addBtn.setForeground(UIUtils.OFFWHITE);
             }
-        
+
             @Override
             public void mouseExited(MouseEvent e) {
                 addBtn.setForeground(Color.WHITE);
             }
         });
-        
+
         panel.add(addBtn);
-        
+
     }
 
     private void renderCards() {
@@ -228,17 +225,17 @@ public class FlashcardPage extends JFrame {
 
     private JPanel createFlashcardUI(Flashcard card) {
 
+        // this is flashcard view box ;
 
-           // this is flashcard view box ;
-           JPanel cardPanel = new JPanel() {
+        JPanel cardPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = UIUtils.get2dGraphics(g);
-                g2.setColor(new Color(45, 60, 75)); 
+                g2.setColor(new Color(45, 60, 75));
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), UIUtils.ROUNDNESS, UIUtils.ROUNDNESS);
                 super.paintComponent(g2);
             }
-    
+
             @Override
             protected void paintBorder(Graphics g) {
                 Graphics2D g2 = UIUtils.get2dGraphics(g);
@@ -246,19 +243,20 @@ public class FlashcardPage extends JFrame {
                 g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, UIUtils.ROUNDNESS, UIUtils.ROUNDNESS);
             }
         };
-    
+
         cardPanel.setPreferredSize(new Dimension(250, 100));
         cardPanel.setLayout(new BorderLayout());
-        cardPanel.setOpaque(false); 
+        cardPanel.setOpaque(false);
         cardPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    
-        JLabel content = new JLabel("<html><div style='text-align:center;'>" + card.getQuestion() + "</div></html>", SwingConstants.CENTER);
+
+        JLabel content = new JLabel("<html><div style='text-align:center;'>" + card.getQuestion() + "</div></html>",
+                SwingConstants.CENTER);
         content.setFont(UIUtils.FONT_GENERAL_UI);
         content.setForeground(Color.WHITE);
         cardPanel.add(content, BorderLayout.CENTER);
-    
-        final boolean[] showingQuestion = {true};
-    
+
+        final boolean[] showingQuestion = { true };
+
         cardPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -270,7 +268,7 @@ public class FlashcardPage extends JFrame {
                 }
             }
         });
-    
+
         return cardPanel;
     }
 

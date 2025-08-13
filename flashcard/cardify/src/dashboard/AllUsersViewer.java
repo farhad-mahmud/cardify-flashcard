@@ -36,7 +36,7 @@ public class AllUsersViewer extends JFrame {
         JLabel title = new JLabel("All Registered Users", SwingConstants.CENTER);
         title.setFont(new Font("Segoe UI", Font.BOLD, 22));
         title.setForeground(Color.WHITE);
-        title.setBounds(0, 20, 450, 30);
+        title.setBounds(0, 20, 450, 40);
         backgroundPanel.add(title);
 
         JPanel userListPanel = new JPanel();
@@ -50,17 +50,22 @@ public class AllUsersViewer extends JFrame {
         for (Document user : docs) {
             String username = user.getString("username");
             String email = user.getString("email");
+            String location = user.getString("location");
 
             JPanel userCard = new JPanel();
             userCard.setLayout(new BorderLayout());
             userCard.setBackground(new Color(58, 64, 77));
             userCard.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
 
-            JLabel nameLabel = new JLabel("👤 " + username);
+            JLabel nameLabel = new JLabel("User: " + username);
             nameLabel.setForeground(Color.WHITE);
             nameLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
 
-            JLabel emailLabel = new JLabel("📧 " + email);
+            JLabel emailLabel = new JLabel("Email: " + email);
+            emailLabel.setForeground(new Color(180, 180, 180));
+            emailLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+
+            JLabel locationlLabel = new JLabel("location: " + location);
             emailLabel.setForeground(new Color(180, 180, 180));
             emailLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 
@@ -69,9 +74,10 @@ public class AllUsersViewer extends JFrame {
             textPanel.setOpaque(false);
             textPanel.add(nameLabel);
             textPanel.add(emailLabel);
+            textPanel.add(locationlLabel);
 
             userCard.add(textPanel, BorderLayout.CENTER);
-            userCard.setMaximumSize(new Dimension(380, 60));
+            userCard.setMaximumSize(new Dimension(380, 100));
 
             userListPanel.add(userCard);
             userListPanel.add(Box.createVerticalStrut(10));

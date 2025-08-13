@@ -6,6 +6,7 @@ public class FlashcardStorage {
     private static final Map<String, List<Flashcard>> flashcardStore = new HashMap<>();
 
     // Initialize with default subjects if empty
+
     static {
         initializeDefaultSubjects();
     }

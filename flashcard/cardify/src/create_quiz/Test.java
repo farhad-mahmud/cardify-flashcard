@@ -11,11 +11,11 @@ import java.util.*;
 
 public class Test extends JFrame {
     private final JPanel panel;
-    
+
     private final Toaster toaster;
 
     public Test() {
-        this(null); // Call the other constructor with no subject
+        this(null); // call the other constructor with no subject
     }
 
     public Test(String subject) {
@@ -101,8 +101,7 @@ public class Test extends JFrame {
     private void addTitle(String subject) {
         JLabel title = new JLabel(
                 subject == null ? "Select a Subject for Quiz" : "Starting Quiz: " + subject,
-                SwingConstants.CENTER
-        );
+                SwingConstants.CENTER);
         title.setFont(new Font("Segoe UI", Font.BOLD, 26));
         title.setForeground(Color.WHITE);
         title.setBounds(0, 50, 800, 40);

@@ -103,6 +103,27 @@ public class RegisterUI extends JFrame {
         });
         panel.add(passwordField);
 
+        TextFieldlocation locationField = new TextFieldlocation();
+        locationField.setBounds(70, 235, 260, 40);
+        locationField.setText("Location");
+        locationField.setForeground(UIUtils.COLOR_OUTLINE);
+        locationField.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                if (String.valueOf(locationField.getLocation()).equals("location")) {
+                    locationField.setText("");
+                    locationField.setForeground(Color.WHITE);
+                }
+            }
+
+            public void focusLost(FocusEvent e) {
+                if (String.valueOf(locationField.getLocation()).isEmpty()) {
+                    locationField.setText("Password");
+                    locationField.setForeground(UIUtils.COLOR_OUTLINE);
+                }
+            }
+        });
+        panel.add(locationField);
+
         final Color[] registerButtonColors = { UIUtils.COLOR_INTERACTIVE, Color.WHITE };
 
         JLabel registerButton = new JLabel() {
@@ -126,7 +147,7 @@ public class RegisterUI extends JFrame {
             }
         };
 
-        registerButton.setBounds(130, 240, 140, 44);
+        registerButton.setBounds(130, 300, 140, 44);
         registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         registerButton.setBackground(UIUtils.COLOR_BACKGROUND);
 
@@ -135,15 +156,16 @@ public class RegisterUI extends JFrame {
             public void mousePressed(MouseEvent e) {
                 String username = usernameField.getText().trim();
                 String email = emailField.getText().trim();
+                String location = locationField.getText().trim();
                 String password = new String(passwordField.getPassword()).trim();
 
-                if (username.isEmpty() || email.isEmpty() || password.isEmpty() ||
+                if (username.isEmpty() || email.isEmpty() || password.isEmpty() || location.isEmpty() ||
                         username.equals("Username") || email.equals("Email") || password.equals("Password")) {
                     toaster.error("All fields required!");
                     return;
                 }
 
-                UserManager.insertUser(username, email, password);
+                UserManager.insertUser(username, email, password, location);
                 toaster.success("Registered: " + username);
 
                 Timer closeTimer = new Timer(1300, ev -> dispose());

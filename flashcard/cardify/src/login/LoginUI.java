@@ -236,9 +236,11 @@ public class LoginUI extends JFrame {
 
             @Override
             public void mouseExited(MouseEvent e) {
+
                 loginButtonColors[0] = UIUtils.COLOR_INTERACTIVE;
                 loginButtonColors[1] = Color.white;
                 loginButton.repaint();
+
             }
         });
 
@@ -265,10 +267,12 @@ public class LoginUI extends JFrame {
         TextFieldPassword passwordField = null;
 
         for (Component c : panel.getComponents()) {
+
             if (c instanceof TextFieldUsername)
                 usernameField = (TextFieldUsername) c;
             if (c instanceof TextFieldPassword)
                 passwordField = (TextFieldPassword) c;
+
         }
 
         if (usernameField == null || passwordField == null) {

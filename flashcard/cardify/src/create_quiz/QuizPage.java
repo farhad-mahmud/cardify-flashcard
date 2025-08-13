@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.Timer;
 
 public class QuizPage extends JFrame {
+
     private final String subject;
     private final List<Flashcard> questions;
     private final JPanel panel;
@@ -135,7 +136,8 @@ public class QuizPage extends JFrame {
 
     private void createQuestionUI() {
         // Question label
-        JLabel qLabel = new JLabel("<html><div style='text-align:center;'>Q" + (currentIndex+1) + ": " + currentQuestion.getQuestion() + "</div></html>", SwingConstants.CENTER);
+        JLabel qLabel = new JLabel("<html><div style='text-align:center;'>Q" + (currentIndex + 1) + ": "
+                + currentQuestion.getQuestion() + "</div></html>", SwingConstants.CENTER);
         qLabel.setFont(UIUtils.FONT_GENERAL_UI);
         qLabel.setForeground(Color.WHITE);
         qLabel.setBounds(50, 80, 700, 60);
@@ -222,7 +224,9 @@ public class QuizPage extends JFrame {
     }
 
     private void showQuizCompleted() {
-        JLabel done = new JLabel("<html><div style='text-align:center;'>Quiz Completed!<br>Final Score: " + score + "/" + questions.size() + "</div></html>",
+        JLabel done = new JLabel(
+                "<html><div style='text-align:center;'>Quiz Completed!<br>Final Score: " + score + "/"
+                        + questions.size() + "</div></html>",
                 SwingConstants.CENTER);
         done.setFont(new Font("Segoe UI", Font.BOLD, 24));
         done.setForeground(Color.WHITE);
